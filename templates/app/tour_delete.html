@@ -1,0 +1,20 @@
+{% extends 'app/base.html' %}
+{% block title %}
+  Delete Tour
+{% endblock %}
+{% block content %}
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">Delete Tour</h1>
+    <form method="POST" class="bg-white p-6 rounded-lg shadow-md border border-gray-300">
+      {% csrf_token %}
+      <p class="text-lg text-gray-600 mb-6">
+        Are you sure you want to delete the tour to
+        <span class="font-medium text-gray-800">"{{ tour.destination_country }}"</span>?
+      </p>
+      <div class="flex gap-4">
+        <button type="submit" class="bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow hover:bg-red-700 transition">Delete</button>
+        <a href="{% url 'home' %}" class="text-gray-700 hover:underline font-medium py-2 px-4">No, take me back</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

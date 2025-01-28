@@ -1,0 +1,29 @@
+# Ignore dependency and build folders
+node_modules/
+dist/
+public/
+
+# Ignore Python virtual environment
+venv/
+.env/
+__pycache__/
+
+# Ignore Django migrations
+**/migrations/
+
+# Ignore static and media files
+staticfiles/
+media/
+
+# Ignore compiled Python files
+*.pyc
+*.pyo
+
+# Ignore other build artifacts
+*.log
+*.sqlite3
+
+# Ignore IDE/editor configuration files
+*.vscode/
+*.idea/
+.DS_Store
