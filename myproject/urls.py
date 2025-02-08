@@ -17,9 +17,13 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),
     path("tour/", include("app.urls")),  # Add this line to include the home app
+    path("accounts/", include("allauth.urls")),
+    path("", RedirectView.as_view(pattern_name="home")),
+    path("__degug__/", include("debug_toolbar.urls")),
 ]
