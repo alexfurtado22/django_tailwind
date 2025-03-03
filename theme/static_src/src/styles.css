@@ -60,6 +60,6 @@ body::-webkit-scrollbar-track {
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: var(--clr-pink);
-  outline: 1px solid var(--clr-pink);
+  background-color: var(--clr-neon-pink);
+  outline: 1px solid var(--clr-neon-pink);
 }

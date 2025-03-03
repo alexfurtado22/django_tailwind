@@ -1,6 +1,8 @@
 from typing import Any
+
+from django.contrib import messages
 from django.db.models.query import QuerySet
-from django.shortcuts import render
+from django.db.models import Q
 from app.models import Tour
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
@@ -11,9 +13,19 @@ class TourListView(LoginRequiredMixin, ListView):
     template_name = "app/home.html"
     model = Tour
     context_object_name = "tours"
+    paginate_by = 6
 
     def get_queryset(self) -> QuerySet[Any]:
-        return Tour.objects.filter(creator=self.request.user).order_by("-create_at")
+
+        search = self.request.GET.get("search")
+        queryset = super().get_queryset().filter(creator=self.request.user)
+        if search:
+            queryset = queryset.filter(
+                Q(oringin_contry__icontains=search)
+                | Q(destination_country__icontains=search)
+                | Q(comment__icontains=search)
+            )
+        return queryset.order_by("-create_at")
 
 
 class TourCreateView(LoginRequiredMixin, CreateView):
@@ -52,6 +64,11 @@ class TourUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self) -> bool | None:
         return self.request.user == self.get_object().creator
 
+    def post(self, request, *args, **kwargs):
+        messages.success(request, "Your Tour has been update successfully!")
+
+        return super().post(request, *args, **kwargs)
+
 
 class TourDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     template_name = "app/tour_delete.html"
@@ -61,6 +78,11 @@ class TourDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self) -> bool | None:
         return self.request.user == self.get_object().creator
+
+    def post(self, request, *args, **kwargs):
+        messages.success(request, "Your Tour has been delete successfully!")
+
+        return super().post(request, *args, **kwargs)
 
 
 # Create your views here.

@@ -21,7 +21,7 @@ class UserProfile(AbstractUser):
 
 
 class Tour(models.Model):
-    oringin_contry = models.CharField(max_length=64)
+    oringin_contry = models.CharField("Origin Country", max_length=64)
     destination_country = models.CharField(max_length=64)
     number_of_nights = models.IntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)

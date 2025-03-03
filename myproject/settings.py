@@ -15,6 +15,8 @@ import os
 import dj_database_url
 import environ
 
+ENV_STATE = os.getenv("ENV_STATE")
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,12 +25,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-x-j-(3ey1g091!igcj%krah5t=#0@z76a(_--7m=k#%jhz^%g%"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+
+ADMIN_URL = os.getenv("ADMIN_URL", "admin")
+
+if ENV_STATE == "production":
+    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+
 
 AUTHENTICATION_BACKENDS = ["allauth.account.auth_backends.AuthenticationBackend"]
 
@@ -42,19 +51,21 @@ DJANGO_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.postgres",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
 ]
 
 THIRD_PARTY_APPS = [
     "tailwind",
-    "django_browser_reload",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",  # Example for social login
     "allauth.socialaccount.providers.github",  # Example for social login
     "widget_tweaks",
+    "anymail",
+    "whitenoise.runserver_nostatic",
 ]
 
 PROJECT_APPS = [
@@ -73,22 +84,28 @@ INTERNAL_IPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
     "allauth.account.middleware.AccountMiddleware",
 ]
 
 if DEBUG:
     # Add Django Debug Toolbar to installed apps only in development
-    INSTALLED_APPS += ["debug_toolbar"]
+    INSTALLED_APPS += [
+        "debug_toolbar",
+        "django_browser_reload",
+    ]
 
     # Add the Debug Toolbar middleware to the middleware stack
-    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
+    MIDDLEWARE += [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+        "django_browser_reload.middleware.BrowserReloadMiddleware",
+    ]
 
     import socket
 
@@ -158,6 +175,16 @@ else:
         }
     }
 
+# Email settings
+DEFAULT_FROM_EMAIL = os.getenv("MAILGUN_MAIL", "None")
+
+ANYMAIL = {
+    "MAILGUN_API_KEY": os.getenv("MAILGUN_API_KEY", "None"),
+    "SEND_DEFAULTS": {"tags": ["djangomail"]},
+}
+
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
+
 
 # Customer user model
 AUTH_USER_MODEL = "app.UserProfile"
@@ -170,7 +197,8 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_EMAIL_VERIFICATION = True
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -213,6 +241,13 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 # URL to access static files
 STATIC_URL = "/static/"
+
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    },
+}
 
 # Directory where collected static files will be stored for production
 STATIC_ROOT = BASE_DIR / "staticfiles"

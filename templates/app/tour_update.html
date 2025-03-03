@@ -1,25 +1,93 @@
 {% extends 'app/layouts/base_form.html' %}
+{% load widget_tweaks %}
 {% block title %}
   Update Tour
 {% endblock %}
-{% block content %}
-  <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold text-gray-800 mb-4">Edit Tour</h1>
-    <p class="text-sm text-gray-500 mb-6">
-      Last edit on <span class="font-medium text-gray-700">{{ tour.update_at|date:'jS F Y' }}</span>
+{% block base_content %}
+  <div class="grid grid-cols-1 justify-center items-center mt-6">
+    <h1 class="text-3xl font-bold mb-4">Edit Tour</h1>
+    <p class="mb-6">
+      Last edit on <span class="font-medium">{{ tour.update_at|date:'jS F Y' }}</span>
     </p>
 
-    <form method="POST" class="bg-white p-6 rounded-lg shadow-md border border-gray-300">
+    <form method="POST" class="p-6 rounded-lg shadow-md border border-clr-neon-pink mb-6" x-data="{ status: '{{ form.status.value }}' }">
       {% csrf_token %}
-      {{ form.as_p }}
-      <div class="mt-4">
-        <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow hover:bg-blue-700 transition">Save</button>
+      <div class="space-y-4">
+        {% for field in form %}
+          <div class="grid grid-cols-1 justify-center items-center mt-6 col-span-2">
+            <label for="{{ field.id_for_label }}" class="block font-medium">{{ field.label }}</label>
+
+            {% if field.name == 'status' %}
+              <select 
+                id="{{ field.id_for_label }}" 
+                name="{{ field.name }}"
+                x-model="status"
+                class="border bg-background p-2 w-full rounded focus:ring-0 focus:outline-none focus:border-clr-neon-pink focus:ring-offset-0"
+              >
+                {% for value, label in field.field.choices %}
+                  <option value="{{ value }}" {% if value == form.status.value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+              </select>
+
+              <!-- Status preview -->
+              <p class="mt-2 text-sm" :class="{ 'text-green-500': status === 'active', 'text-red-500': status === 'inactive' }">
+                Selected Status: <span x-text="status"></span>
+              </p>
+
+            {% else %}
+              {% render_field field class='border bg-background p-2 w-full rounded focus:ring-0 focus:outline-none focus:border-clr-neon-pink focus:ring-offset-0' %}
+            {% endif %}
+
+            {% if field.help_text %}
+              <p class="text-sm text-gray-500">{{ field.help_text }}</p>
+            {% endif %}
+            {% for error in field.errors %}
+              <p class="text-sm text-red-500">{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="mt-10 text-center">
+        <button type="submit" class="btn max-md:w-full">Save</button>
       </div>
     </form>
 
     <div class="flex justify-between items-center mt-6">
-      <a href="{% url 'home' %}" class="text-blue-500 hover:underline text-sm">Back to list</a>
-      <a href="{% url 'tour_delete' tour.id %}" class="text-red-500 hover:underline text-sm">Delete Tour</a>
+      <a href="{% url 'home' %}" class="hover:underline hover:text-clr-neon-pink text-sm font-medium mb-2">Back to list</a>
+      <a hx-get="{% url 'tour_delete' tour.id %}" 
+   hx-target="#dialog"
+   hx-trigger="click"
+   hx-select="section"
+   class="text-red-500 hover:underline text-sm mb-2 cursor-pointer">
+   Delete Tour
+</a>
     </div>
   </div>
 {% endblock %}
+
+{% block extra_body  %}
+<div id="modal" class="relative z-10 hidden ">
+  
+  <div class="bg-black/85 dark:bg-black/85 fixed inset-0 flex justify-center items-center text-center"></div>
+  <div class="fixed inset-0 z-10 w-screen p-4 ">
+    <div id="dialog" class="mx-auto text-white rounded-sm shadow-md p-4 ">  
+    </div>
+  </div>
+</div>
+{% endblock extra_body  %} 
+
+{% block page_js %}
+{{ block.super }}
+<script type="application/javascript">
+  const modal = document.getElementById("modal")
+  htmx.on("htmx:afterSwap", function(e) {
+      if (e.detail.target.id == "dialog") {
+          modal.classList.toggle("hidden")
+      }
+  })
+  
+  </script>
+  
+
+{% endblock page_js %}

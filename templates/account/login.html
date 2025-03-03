@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load allauth account %}
+{% block title %}
+  Log in
+{% endblock %}
+
+{% block base_content %}
+  <section class="min-h-dvh items-center flex flex-col justify-start section max-sm:min-h-[900px,100dvh]">
+    <svg width="100px" height="100px" fill="currentColor" class="text-black dark:text-white mb-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 23.003L19.497 23C12.59 22.958 1 22.514 1 20c0-1.09 1.756-1.416 4.187-1.866 1.193-.22 3.677-.682 3.814-1.138-.116-.368-2.117-.889-4.523-.997L4 15.979V15l1 .026c2.06.128 5 .56 5 1.974 0 1.259-2.146 1.656-4.632 2.117-1.18.219-3.153.584-3.382.94.309.97 8.324 1.887 17.515 1.943H20zM9 5.133C9 7.412 6.814 10.5 5 14c-1.814-3.5-4-6.587-4-8.868A4.04 4.04 0 0 1 5 1a4.04 4.04 0 0 1 4 4.132zm-3.435 5.752C6.817 8.66 8 6.562 8 5.132A3.035 3.035 0 0 0 5 2a3.035 3.035 0 0 0-3 3.132c0 1.43 1.183 3.53 2.435 5.753.186.332.376.668.565 1.01.19-.342.379-.678.565-1.01zM7 5a2 2 0 1 1-2-2 2 2 0 0 1 2 2zM6 5a1 1 0 1 0-1 1 1 1 0 0 0 1-1zm17 7.132c0 2.281-2.186 5.368-4 8.868-1.814-3.5-4-6.587-4-8.868a4.002 4.002 0 1 1 8 0zm-3.435 5.753C20.817 15.66 22 13.562 22 12.132a3.003 3.003 0 1 0-6 0c0 1.43 1.183 3.53 2.435 5.753.186.332.376.668.565 1.01.19-.342.379-.678.565-1.01zM21 12a2 2 0 1 1-2-2 2 2 0 0 1 2 2zm-1 0a1 1 0 1 0-1 1 1 1 0 0 0 1-1z" />
+      <path fill="none" d="M0 0h24v24H0z" />
+    </svg>
+    <!-- Visitor Message Section -->
+    <div class="w-full text-center py-4">
+      <p class="text-fluid-1 font-medium">Welcome to our Tour service! Please sign in or sign up to access exclusive features.</p>
+    </div>
+    <div class="rounded-md shadow-sm border border-clr-neon-pink grid justify-center items-center max-w-[500px] mx-auto p-6 section mb-10">
+      <h1 class="text-center text-fluid-base font-extrabold mb-6">Sign in to your account</h1>
+      <p class="text-center text-fluid-0 font-medium mb-6">
+        Or <a class="font-bold hover:underline text-clr-neon-pink" href="{{ signup_url }}">Sign up</a>?
+      </p>
+      <form method="POST" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        {% if form.errors %}
+          {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+              <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-3 rounded-md shadow-md mb-2 text-fluid-0">{{ error }}</div>
+            {% endfor %}
+          {% endfor %}
+        {% endif %}
+        <div>
+          <label class="sr-only" for="{{ form.login.id_for_label }}">Email</label>
+          {% render_field form.login class='w-full mb-6 px-4 py-2 border bg-background rounded-md focus:ring-clr-neon-pink focus:border-clr-neon-pink' placeholder='Enter your email' %}
+        </div>
+        <div>
+          <label class="sr-only mb-6" for="{{ form.password.id_for_label }}">Password</label>
+          {% render_field form.password class='w-full mb-6 px-4 py-2 border bg-background  rounded-md focus:ring-clr-neon-pink focus:border-clr-neon-pink' placeholder='Enter your password' %}
+        </div>
+        <div class="flex items-center gap-2">
+          {% render_field form.remember class='border size-4 text-clr-neon-pink  rounded-sm focus:ring-clr-neon-pink focus:border-clr-neon-pink' %}
+          <label for="{{ form.remember.id_for_label }}" class="text-sm">Remember</label>
+        </div>
+        <div class="mt-10 text-center mb-6">
+          <button type="submit" class="btn w-full" aria-label="Sign in to your account">Sign in</button>
+        </div>
+        <div class="mt-8 flex flex-col gap-2 justify-center items-center">
+          {% if SOCIALACCOUNT_ENABLED %}
+            {% include 'socialaccount/snippets/login.html' with page_layout='entrance' %}
+          {% endif %}
+        </div>
+      </form>
+    </div>
+  </section>
+{% endblock %}

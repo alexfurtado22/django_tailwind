@@ -56,11 +56,14 @@ const config = {
         shadowlight: 'var(--shadowlight)',
         shadowstrong: 'var(--shadowstrong)',
         muted: 'var(--muted)',
-        input: 'var(--text1)',
-        'input-bg': 'var(--input-bg)',
+        'input-text': 'var(--text1)',
+        'input-bg': 'var(--background3)',
         'input-placeholder': 'var(--input-placeholder)',
         ring: 'var(--ring-color)',
         'ring-focus': 'var(--ring-focus)',
+      },
+      ringColor: {
+        DEFAULT: 'transparent',
       },
       fontSize: {
         'fluid-00': 'clamp(.50rem, 2vw, 1rem)',
@@ -93,7 +96,6 @@ const config = {
           marginRight: 'auto',
           paddingLeft: '0.5rem',
           paddingRight: '0.5rem',
-          border: '1px solid red',
         },
         '.text-shadow': {
           textShadow: '0 0 10px var(--textshadow), 0 0 25px var(--textshadow2)',

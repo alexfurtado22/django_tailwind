@@ -1,9 +1,12 @@
-{% extends 'app/base.html' %}
+{% extends 'base.html' %}
+{% load widget_tweaks %}
 
-{% block content %}
+{% block base_content %}
 
 {% endblock %}
 {% block page_js %}
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+
   <script>
     const contentMarkdown = new EasyMDE({
       element: document.getElementById('id_comment'),
@@ -12,19 +15,16 @@
       toolbar: [
         'bold',
         'italic',
-        'strikethrough',
+    
         '|',
         'heading',
         'quote',
         'unordered-list',
         'ordered-list',
         '|',
-        'link',
-        'image',
-        'table',
+    
         '|',
-        'preview',
-        'side-by-side',
+    
         'fullscreen',
       ],
       forceSync: true,

@@ -1,0 +1,1006 @@
+{% load static tailwind_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="{% if request.COOKIES.dark_mode == 'true' %}dark{% endif %}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}
+        Document
+      {% endblock %}
+    </title>
+    {% tailwind_css %}
+    <script src="https://cdn.jsdelivr.net/npm/@heroicons/react/outline"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css" />
+    <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml" sizes="32x32" />
+    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+
+    {% block extra_head %}
+
+    {% endblock %}
+  </head>
+  <body>
+    {% url 'home' as your_tours_url %}
+    {% url 'tour_create' as create_new_url %}
+    {% url 'account_email' as change_email_url %}
+    <main class="grid grid-cols-2 items-center justify-center">
+      <header class="grid grid-cols-1 justify-center items-center col-span-3 holder py-4 px-6">
+        <nav class="flex items-center justify-between p-4">
+          <!-- Logo / Site Title -->
+          <svg width="50px" height="50px" fill="currentColor" class="text-black dark:text-white max-md:hidden" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 23.003L19.497 23C12.59 22.958 1 22.514 1 20c0-1.09 1.756-1.416 4.187-1.866 1.193-.22 3.677-.682 3.814-1.138-.116-.368-2.117-.889-4.523-.997L4 15.979V15l1 .026c2.06.128 5 .56 5 1.974 0 1.259-2.146 1.656-4.632 2.117-1.18.219-3.153.584-3.382.94.309.97 8.324 1.887 17.515 1.943H20zM9 5.133C9 7.412 6.814 10.5 5 14c-1.814-3.5-4-6.587-4-8.868A4.04 4.04 0 0 1 5 1a4.04 4.04 0 0 1 4 4.132zm-3.435 5.752C6.817 8.66 8 6.562 8 5.132A3.035 3.035 0 0 0 5 2a3.035 3.035 0 0 0-3 3.132c0 1.43 1.183 3.53 2.435 5.753.186.332.376.668.565 1.01.19-.342.379-.678.565-1.01zM7 5a2 2 0 1 1-2-2 2 2 0 0 1 2 2zM6 5a1 1 0 1 0-1 1 1 1 0 0 0 1-1zm17 7.132c0 2.281-2.186 5.368-4 8.868-1.814-3.5-4-6.587-4-8.868a4.002 4.002 0 1 1 8 0zm-3.435 5.753C20.817 15.66 22 13.562 22 12.132a3.003 3.003 0 1 0-6 0c0 1.43 1.183 3.53 2.435 5.753.186.332.376.668.565 1.01.19-.342.379-.678.565-1.01zM21 12a2 2 0 1 1-2-2 2 2 0 0 1 2 2zm-1 0a1 1 0 1 0-1 1 1 1 0 0 0 1-1z" />
+            <path fill="none" d="M0 0h24v24H0z" />
+          </svg>
+          <!-- Navigation Links -->
+          <div class="flex space-x-6 text-sm max-sm:text-xs max-sm:hidden">
+            <a href="{{ your_tours_url }}" class="hover:text-clr-neon-pink duration-300 {% if request.path == your_tours_url %} font-semibold {% endif %}">Home</a>
+
+            <a href="{% if request.path != create_new_url %}
+                {{ create_new_url }}
+              {% else %}
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                #
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              {% endif %}"
+              class="hover:text-clr-neon-pink duration-300{% if request.path == create_new_url %} font-semibold{% endif %}">
+              Create Tour
+            </a>
+
+            {% if user.is_authenticated %}
+              <a href="{{ change_email_url }}" class="hover:text-clr-neon-pink duration-300 {% if request.path == account_email %} font-semibold {% endif %}">Change email</a>
+
+              <form method="POST" action="{% url 'account_logout' %}" class="inline">
+                {% csrf_token %}
+                <button type="submit" class="hover:text-clr-neon-pink duration-300 bg-transparent border-none p-0">Log out</button>
+              </form>
+            {% else %}
+              <a href="{% url 'account_login' %}" class="hover:text-green-500">Log in</a>
+              <a href="{% url 'account_signup' %}" class="hover:text-green-500">Sign up</a>
+            {% endif %}
+          </div>
+
+          <!-- Dark Mode Toggle -->
+          <button id="dark-mode-toggle" class="flex items-center justify-end space-x-2 pl-4">
+            <!-- Sun Icon (Hidden in Dark Mode) -->
+            <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="hidden size-6 text-yellow-500">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+            </svg>
+
+            <!-- Moon Icon (Hidden in Light Mode) -->
+            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+            </svg>
+          </button>
+          <!-- Mobile Menu Button (Toggles Open/Close) -->
+          <button id="mobile-menu-button" class="hidden max-sm:block p-2">
+            <!-- Hamburger Icon -->
+            <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 text-black dark:text-white">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <!-- Close Icon (Initially Hidden) -->
+            <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hidden h-6 w-6 text-black dark:text-white">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </nav>
+        <!-- Mobile Menu (Initially Hidden) -->
+        <div id="mobile-menu" class="hidden sm:hidden">
+          <div class="flex flex-col items-center space-y-4 p-4 sm:hidden max-sm:text-sm">
+            <a href="{{ your_tours_url }}" class="hover:text-clr-neon-pink duration-300 {% if request.path == your_tours_url %} font-semibold {% endif %}">Home</a>
+
+            <a href="{% if request.path != create_new_url %}
+                {{ create_new_url }}
+              {% else %}
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                #
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              {% endif %}"
+              class="hover:text-clr-neon-pink duration-300{% if request.path == create_new_url %} font-semibold{% endif %}">
+              Create Tour
+            </a>
+
+            {% if user.is_authenticated %}
+              <a href="{{ change_email_url }}" class="hover:text-clr-neon-pink duration-300 {% if request.path == account_email %} font-semibold {% endif %}">Change email</a>
+              <form method="POST" action="{% url 'account_logout' %}" class="inline">
+                {% csrf_token %}
+                <button type="submit" class="hover:text-clr-neon-pink duration-300 bg-transparent border-none p-0">Log out</button>
+              </form>
+            {% else %}
+              <a href="{% url 'account_login' %}" class="hover:text-green-500">Log in</a>
+              <a href="{% url 'account_signup' %}" class="hover:text-green-500">Sign up</a>
+            {% endif %}
+          </div>
+        </div>
+      </header>
+
+      <section class="grid justify-center grid-cols-1 items-center holder col-span-3">
+        <div class="flex justify-center items-center text-center mt-2">
+          {% if messages %}
+            <ul class="space-y-2">
+              {% for message in messages %}
+                <li class="border rounded-md shadow-sm p-2 text-xs 
+                    {% if message.tags == 'success' %}
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                     bg-green-100 text-green-700 text-sm
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  {% elif message.tags == 'error' %}
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                     bg-red-100 text-red-700 text-sm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  {% elif message.tags == 'warning' %}
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                     bg-yellow-100 text-yellow-700 text-sm
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  {% else %}
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                     bg-gray-100 text-gray-700 text-sm
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  {% endif %}">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+
+        {% block base_content %}
+
+        {% endblock %}
+      </section>
+
+      <footer class="grid holder p-4 col-span-3">
+        <div class="mx-auto text-center">
+          <p>&copy; 2025 Alex Furtado. Free to use and share.</p>
+        </div>
+      </footer>
+      {% block extra_body %}
+
+      {% endblock %}
+      {% block page_js %}
+
+      {% endblock %}
+    </main>
+    <script src="{% static 'js/dark_mode.js' %}"></script>
+    <script src="{% static 'js/mobileMenuToggle.js' %}"></script>
+  </body>
+</html>
