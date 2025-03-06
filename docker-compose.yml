@@ -16,6 +16,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: dev
     init: true
     volumes:
       - .:/code
