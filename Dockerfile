@@ -39,8 +39,7 @@ FROM base AS prod
 # Install only production dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Ensure prod-specific files and optimizations (skip Playwright in prod)
-RUN python manage.py collectstatic --no-input
+
 
 # Command to run the Django server when the container starts (Production)
 ENTRYPOINT ["/code/start-django.sh"]
