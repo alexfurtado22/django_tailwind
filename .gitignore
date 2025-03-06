@@ -9,6 +9,8 @@ env/
 venv/
 .venv/
 .env.local/
+.env.docker/
+.env.local
 .env.docker
 
 # Django
