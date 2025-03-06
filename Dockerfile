@@ -30,9 +30,6 @@ FROM base AS dev
 # Install development dependencies
 RUN pip install --no-cache-dir -r requirements-dev.txt
 
-# Install Playwright and its dependencies (including browser binaries) in dev only
-RUN python -m playwright install --with-deps
-
 # Define ENTRYPOINT to start the Django server (Development)
 ENTRYPOINT ["/code/start-django.sh"]
 
