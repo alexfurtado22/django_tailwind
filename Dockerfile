@@ -1,5 +1,4 @@
-# Base stage for common setup
-FROM python:3.12-slim-bullseye AS base
+FROM python:3.12-slim-bullseye
 
 # Set environment variable to avoid buffering of stdout/stderr
 ENV PYTHONUNBUFFERED=1
@@ -8,11 +7,10 @@ ENV PYTHONUNBUFFERED=1
 RUN mkdir /code
 WORKDIR /code
 
-# Copy the requirements files into the container
+# Copy the requirements.txt file into the container
 COPY requirements.txt /code/
-COPY requirements-dev.txt /code/
 
-# Install production dependencies by default
+# Install dependencies using pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the code into the container
@@ -24,22 +22,5 @@ RUN chmod +x /code/start-django.sh
 # Expose the port the app runs on
 EXPOSE 8000
 
-# Dev stage - this is the default one we'll use for development
-FROM base AS dev
-
-# Install development dependencies
-RUN pip install --no-cache-dir -r requirements-dev.txt
-
-# Define ENTRYPOINT to start the Django server (Development)
-ENTRYPOINT ["/code/start-django.sh"]
-
-# Prod stage
-FROM base AS prod
-
-# Install only production dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-
-
-# Command to run the Django server when the container starts (Production)
+# Command to run the Django server when the container starts
 ENTRYPOINT ["/code/start-django.sh"]
