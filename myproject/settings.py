@@ -154,26 +154,10 @@ WSGI_APPLICATION = "myproject.wsgi.application"
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, ".env.local"))  # Load .env.local file
 
-# Get the database URL from environment variables
-DATABASE_URL = os.getenv("DATABASE_URL")
 
-if DATABASE_URL:
-    # Use PostgreSQL if DATABASE_URL is set
-    DATABASES = {
-        "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
-    }
-else:
-    # Directly set up PostgreSQL for local development
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": "mydatabase",  # Your PostgreSQL database name
-            "USER": "myuser",  # Your PostgreSQL username
-            "PASSWORD": "lp874dpudc22",  # Your PostgreSQL password
-            "HOST": "localhost",  # PostgreSQL server address
-            "PORT": "5432",  # PostgreSQL default port
-        }
-    }
+# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
+DATABASES = {"default": dj_database_url.config(conn_max_age=600)}
 
 # Email settings
 DEFAULT_FROM_EMAIL = os.getenv("MAILGUN_MAIL", "None")
