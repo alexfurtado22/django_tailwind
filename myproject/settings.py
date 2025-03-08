@@ -64,7 +64,6 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount.providers.google",  # Example for social login
     "allauth.socialaccount.providers.github",  # Example for social login
     "widget_tweaks",
-    "anymail",
     "whitenoise.runserver_nostatic",
 ]
 
@@ -160,14 +159,6 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env.local"))  # Load .env.local fi
 DATABASES = {"default": dj_database_url.config(conn_max_age=600)}
 
 # Email settings
-DEFAULT_FROM_EMAIL = os.getenv("MAILGUN_MAIL", "None")
-
-ANYMAIL = {
-    "MAILGUN_API_KEY": os.getenv("MAILGUN_API_KEY", "None"),
-    "SEND_DEFAULTS": {"tags": ["djangomail"]},
-}
-
-EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
 
 
 # Customer user model
@@ -181,7 +172,7 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_EMAIL_VERIFICATION = True
+ACCOUNT_EMAIL_VERIFICATION = "none"
 
 
 # Password validation
