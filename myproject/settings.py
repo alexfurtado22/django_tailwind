@@ -34,6 +34,11 @@ ALLOWED_HOSTS = ["*"]
 
 ADMIN_URL = os.getenv("ADMIN_URL", "admin")
 
+# Add trusted origins for CSRF protection
+CSRF_TRUSTED_ORIGINS = [
+    "https://djangotailwind-production-21fa.up.railway.app",
+]
+
 if ENV_STATE == "production":
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
